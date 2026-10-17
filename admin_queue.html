@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block content %}
+<div class="toolbar"><a href="/admin/queue">Queue</a> · <a href="/admin/users">Users</a> ·
+<a href="/admin/log">Log</a> · <a href="/dashboard">Dashboard</a></div>
+<h1>Moderation Queue</h1>
+<p>Pending: {{ counts.pending }} · Approved: {{ counts.approved }} · Rejected: {{ counts.rejected }}</p>
+<p><a href="?status=pending">Pending</a> | <a href="?status=approved">Approved</a> | <a href="?status=rejected">Rejected</a></p>
+<form method="post" action="/admin/queue/bulk" style="margin:1em 0">
+<select name="action"><option value="approve">Approve all</option><option value="reject">Reject all</option></select>
+score ≥ <input type="number" name="min_score" value="70" style="width:5em">
+<button>Apply</button></form>
+<table border="1" cellpadding="6">
+<tr><th>Host</th><th>Port</th><th>Score</th><th>Grade</th><th>Latency</th><th>Tunnel</th><th>Protocol</th><th>Actions</th></tr>
+{% for h in hosts %}<tr>
+<td>{{ h.host }}</td><td>{{ h.port }}</td><td>{{ h.score }}</td><td>{{ h.grade }}</td>
+<td>{{ h.latency_ms or "—" }}</td><td>{{ "✅" if h.tunnel_ready else "❌" }}</td>
+<td>{{ h.best_protocol or "—" }}</td>
+<td>{% if current == "pending" %}
+<form method="post" action="/admin/queue/approve/{{ h.id }}" style="display:inline"><button>✅</button></form>
+<form method="post" action="/admin/queue/reject/{{ h.id }}" style="display:inline">
+<input name="reason" placeholder="reason" style="width:8em"><button>❌</button></form>
+{% else %}<small>#{{ h.reviewed_by }} {{ h
