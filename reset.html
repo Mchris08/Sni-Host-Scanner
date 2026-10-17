@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h2>Reset Password</h2>
+<form method="post" action="/reset">
+<input type="hidden" name="token" value="{{ token }}">
+<label>New password <input type="password" name="password" minlength="8" required></label>
+<button type="submit">Set Password</button></form></div>
+{% endblock %}
