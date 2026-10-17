@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block content %}
+<div class="toolbar">
+<span>Logged in as <b>{{ user.email }}</b>{% if user.role == 'admin' %} · <a href="/admin/queue">Admin</a>{% endif %}</span>
+<form method="post" action="/logout" style="display:inline"><button>Log out</button></form>
+</div>
+<h1>Zimbabwe Host Scanner</h1>
+<form method="post" action="/scan/run"><button>▶ Run scan now</button></form>
+<h2>🇿🇼 Approved Zimbabwe Hosts</h2>
+<table border="1" cellpadding="6">
+<tr><th>Host</th><th>Port</th><th>Score</th><th>Grade</th><th>Tunnel-Ready</th><th>Protocol</th></tr>
+{% for h in zim_hosts %}<tr>
+<td>{{ h.host }}</td><td>{{ h.port }}</td><td>{{ h.score }}</td><td>{{ h.grade }}</td>
+<td>{{ "✅" if h.tunnel_ready else "❌" }}</td><td>{{ h.best_protocol or "—" }}</td></tr>{% endfor %}
+</table>
+<h2>🌍 Global Hosts</h2>
+<table border="1" cellpadding="6">
+<tr><th>Host</th><th>Port</th><th>Score</th><th>Protocol</th></tr>
+{% for h in glob_hosts %}<tr>
+<td>{{ h.host }}</td><td>{{ h.port }}</td><td>{{ h.score }}</td>
+<td>{{ h.best_protocol or "—" }}</td></tr>{% endfor %}
+</table>
+{% endblock %}
