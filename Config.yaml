@@ -1,0 +1,29 @@
+base_url: "http://localhost:8000"
+
+hosts:
+  - {host: 41.220.16.208, port: 80, sni_candidates: [www.telone.co.zw], _region: zim}
+  - {host: 197.221.240.176, port: 80, sni_candidates: [www.telone.co.zw], _region: zim}
+  - {host: 196.44.184.138, port: 5678, sni_candidates: [www.google.com], _region: zim}
+
+public_feeds:
+  enabled: true
+  sources:
+    - https://raw.githubusercontent.com/proxyscrape/free-proxy-list/main/proxies/countries/zw/data.txt
+    - https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/All_Configs_Sub.txt
+  max_fetch: 5000
+  max_after_filter: 800
+
+subdomain_scan:
+  enabled: false
+  domains: []
+  brute_force: false
+  crtsh: true
+
+scoring:
+  zim_bonus: 15
+  min_working_score: 30
+
+scan:
+  concurrency: 100
+  probes: 3
+  timeout: 5
