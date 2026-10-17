@@ -1,0 +1,12 @@
+from fastapi import Request, HTTPException
+from app.auth import current_user
+
+def require_admin(request: Request):
+    u = current_user(request)
+    if not u:
+        raise HTTPException(303, headers={"Location": "/login"})
+    if u.role != "admin":
+        raise HTTPException(403, "Admin access required")
+    if not u.is_active:
+        raise HTTPException(403, "Account disabled")
+    return u
