@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h2>Log In</h2>
+{% if verified %}<div class="ok">Email verified — please log in.</div>{% endif %}
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+<form method="post" action="/login">
+<label>Email <input type="email" name="email" required></label>
+<label>Password <input type="password" name="password" required></label>
+<button type="submit">Log In</button></form>
+<form method="post" action="/forgot">
+<label>Forgot? <input type="email" name="email" required></label>
+<button type="submit">Send reset link</button></form>
+<p>New? <a href="/signup">Sign up</a></p></div>
+{% endblock %}
